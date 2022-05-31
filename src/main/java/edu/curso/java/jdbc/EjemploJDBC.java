@@ -14,12 +14,19 @@ public class EjemploJDBC {
 			Class.forName("com.mysql.jdbc.Driver");
 			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
 			connection = DriverManager.getConnection(urlConnection, "root", "root");
-			String sqlInsert = "INSERT INTO PERSONAS (nombre, apellido, edad) VALUES (?, ?, ?)";
-			PreparedStatement comandoSQL = connection.prepareStatement(sqlInsert);
-			comandoSQL.setString(1, "Juan");
-			comandoSQL.setString(2, "Perez");
-			comandoSQL.setInt(3, 34);
-			comandoSQL.execute();
+			
+			String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas";
+			PreparedStatement comandoSQLConsulta = connection.prepareStatement(consultaSQL);
+			ResultSet resultado = comandoSQLConsulta.executeQuery();
+			
+			while(resultado.next() == true) {
+				System.out.println("***********************************");
+				System.out.println("Id persona: " + resultado.getInt("idPersona"));
+				System.out.println("nombre: " + resultado.getString("nombre"));
+				System.out.println("apellido: " + resultado.getString("apellido"));
+				System.out.println("edad: " + resultado.getInt("edad"));				
+			}
+			
 			
 		} catch (SQLException e) {
 			System.out.println("Hay un error con el SQL");
