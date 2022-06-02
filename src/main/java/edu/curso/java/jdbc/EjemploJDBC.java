@@ -15,19 +15,14 @@ public class EjemploJDBC {
 			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
 			connection = DriverManager.getConnection(urlConnection, "root", "root");
 			
-			String insertSQL = "INSERT INTO personas (nombre, apellido, edad) VALUEs (?, ?, ?)";
-			PreparedStatement insertSQLConsulta = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
-			insertSQLConsulta.setString(1, "Lucas");
-			insertSQLConsulta.setString(2, "Perez");
-			insertSQLConsulta.setInt(3, 34);
-			insertSQLConsulta.executeUpdate();
+			String insertSQL = "UPDATE personas SET EDAD = EDAD + 1 WHERE EDAD >= ?"
+					;
+			PreparedStatement insertSQLConsulta = connection.prepareStatement(insertSQL);
+			insertSQLConsulta.setInt(1, 10);
 			
-			ResultSet consultaDeId = insertSQLConsulta.getGeneratedKeys();
-			if(consultaDeId.next()) {
-				Integer idGenerado = consultaDeId.getInt(1);
-				
-				System.out.println("ID generado: " + idGenerado);
-			}
+			Integer rowsAfectados = insertSQLConsulta.executeUpdate();
+			
+			System.out.println("rowsAfectados: " + rowsAfectados);
 			
 			/*String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas";
 			PreparedStatement comandoSQLConsulta = connection.prepareStatement(consultaSQL);
