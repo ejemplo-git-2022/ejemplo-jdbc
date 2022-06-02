@@ -15,7 +15,21 @@ public class EjemploJDBC {
 			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
 			connection = DriverManager.getConnection(urlConnection, "root", "root");
 			
-			String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas";
+			String insertSQL = "INSERT INTO personas (nombre, apellido, edad) VALUEs (?, ?, ?)";
+			PreparedStatement insertSQLConsulta = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+			insertSQLConsulta.setString(1, "Lucas");
+			insertSQLConsulta.setString(2, "Perez");
+			insertSQLConsulta.setInt(3, 34);
+			insertSQLConsulta.executeUpdate();
+			
+			ResultSet consultaDeId = insertSQLConsulta.getGeneratedKeys();
+			if(consultaDeId.next()) {
+				Integer idGenerado = consultaDeId.getInt(1);
+				
+				System.out.println("ID generado: " + idGenerado);
+			}
+			
+			/*String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas";
 			PreparedStatement comandoSQLConsulta = connection.prepareStatement(consultaSQL);
 			ResultSet resultado = comandoSQLConsulta.executeQuery();
 			
@@ -25,7 +39,7 @@ public class EjemploJDBC {
 				System.out.println("nombre: " + resultado.getString("nombre"));
 				System.out.println("apellido: " + resultado.getString("apellido"));
 				System.out.println("edad: " + resultado.getInt("edad"));				
-			}
+			}*/
 			
 			
 		} catch (SQLException e) {
