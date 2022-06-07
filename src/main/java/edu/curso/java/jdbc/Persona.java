@@ -25,11 +25,11 @@ public class Persona {
 		
 	}
 	
-	public Persona(Integer idPersona, String nombre, String apellido) {
+	public Persona(String nombre, String apellido, Integer edad) {
 		super();
-		this.idPersona = idPersona;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.edad = edad;
 	}
 
 	public Integer getIdPersona() {

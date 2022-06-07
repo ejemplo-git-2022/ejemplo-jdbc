@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class PersonaDAO {
 	
-	public Integer nuevaPersona(Persona persona) {
+	public static Integer nuevaPersona(Persona persona) {
 		
 		Connection connection = null;
 		Integer idGenerado = null;

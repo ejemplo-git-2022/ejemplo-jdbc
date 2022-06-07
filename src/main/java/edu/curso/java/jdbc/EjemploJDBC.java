@@ -10,6 +10,10 @@ public class EjemploJDBC {
 
 		System.out.println("Inicio del programa");
 		PersonaDAO personaDAO = new PersonaDAO();
+		
+		Integer idGenerado = PersonaDAO.nuevaPersona(new Persona("Juan", "Lopez", 34));
+		System.out.println(idGenerado);
+		
 /*		Persona persona1 = new Persona();
 		persona1.setNombre("Juan");
 		persona1.setApellido("Perez");
