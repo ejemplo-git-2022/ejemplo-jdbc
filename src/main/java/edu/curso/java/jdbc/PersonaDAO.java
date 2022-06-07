@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class PersonaDAO {
 	
-	public static Integer nuevaPersona(Persona persona) {
+	public Integer nuevaPersona(Persona persona) throws PersonaException  {
 		
 		Connection connection = null;
 		Integer idGenerado = null;
@@ -18,7 +18,7 @@ public class PersonaDAO {
 			//REGISTRAR EL DRIVER JDBC DE MYSQL
 			Class.forName("com.mysql.jdbc.Driver");
 			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-			connection = DriverManager.getConnection(urlConnection, "root", "root");
+			connection = DriverManager.getConnection(urlConnection, "root", "xxxxx");
 			connection.setAutoCommit(false);
 			
 			String insertSQL = "INSERT INTO personas (nombre, apellido, edad) VALUEs (?, ?, ?)";
@@ -34,22 +34,16 @@ public class PersonaDAO {
 				
 				System.out.println("ID generado: " + idGenerado);
 			}
-			
-			connection.commit();
+		
 			
 		} catch (SQLException e) {
 			System.out.println("Hay un error con el SQL");
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {}
-			e.printStackTrace();
+			throw new PersonaException("No pudimos dar de alta la persona", e);
+			
 		} catch (Exception e) {
 			System.out.println("Hay un error generico...");
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {}
-
-			e.printStackTrace();
+			
+			throw new PersonaException("No pudimos dar de alta la persona", e);
 		} finally {
 			if(connection != null) {
 				try {

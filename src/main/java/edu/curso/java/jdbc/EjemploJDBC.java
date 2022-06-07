@@ -11,31 +11,23 @@ public class EjemploJDBC {
 		System.out.println("Inicio del programa");
 		PersonaDAO personaDAO = new PersonaDAO();
 		
-		Integer idGenerado = PersonaDAO.nuevaPersona(new Persona("Juan", "Lopez", 34));
-		System.out.println(idGenerado);
-		
-/*		Persona persona1 = new Persona();
+		Persona persona1 = new Persona();
 		persona1.setNombre("Juan");
 		persona1.setApellido("Perez");
 		persona1.setEdad(20);
 		
-		Integer idGenerado = personaDAO.nuevaPersona(persona1);
-		
-		System.out.println(idGenerado);*/
-		
-		
-		/*Persona personaRecupera = personaDAO.recuperarPersonaPorId(8);
-		System.out.println(personaRecupera);
-		
-		personaRecupera.setNombre("Maria");
-		personaDAO.actualizarPersona(personaRecupera);*/
-		
-		//personaDAO.borrarPersonaPorId(8);
-		
-		ArrayList<Persona> personas = personaDAO.recuperarPersonas();
-		for (Persona p : personas) {
-			System.out.println(p);
+		Integer idGenerado;
+		try {
+			idGenerado = personaDAO.nuevaPersona(persona1);
+			System.out.println(idGenerado);
+
+		} catch (PersonaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
+	
 		
 		System.out.println("Fin del programa");
 
