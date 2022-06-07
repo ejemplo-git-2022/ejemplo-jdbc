@@ -10,16 +10,18 @@ import java.util.ArrayList;
 
 public class PersonaDAO {
 	
+	private Connection crearNuevaConnection() throws Exception {
+		Class.forName("com.mysql.jdbc.Driver");
+		String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
+		return DriverManager.getConnection(urlConnection, "root", "root");
+	}
+	
 	public Integer nuevaPersona(Persona persona) throws PersonaException  {
 		
 		Connection connection = null;
 		Integer idGenerado = null;
 		try {
-			//REGISTRAR EL DRIVER JDBC DE MYSQL
-			Class.forName("com.mysql.jdbc.Driver");
-			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-			connection = DriverManager.getConnection(urlConnection, "root", "xxxxx");
-			connection.setAutoCommit(false);
+			connection = this.crearNuevaConnection();
 			
 			String insertSQL = "INSERT INTO personas (nombre, apellido, edad) VALUEs (?, ?, ?)";
 			PreparedStatement insertSQLConsulta = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
@@ -59,10 +61,8 @@ public class PersonaDAO {
 		Integer idGenerado = null;
 		try {
 			//REGISTRAR EL DRIVER JDBC DE MYSQL
-			Class.forName("com.mysql.jdbc.Driver");
-			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-			connection = DriverManager.getConnection(urlConnection, "root", "root");
-			
+			connection = this.crearNuevaConnection();
+
 			String updateSQL = "UPDATE personas SET nombre = ?, apellido = ?, edad = ? WHERE idPersona = ?";
 			PreparedStatement insertSQLConsulta = connection.prepareStatement(updateSQL);
 			insertSQLConsulta.setString(1, persona.getNombre());
@@ -89,10 +89,8 @@ public class PersonaDAO {
 	public void borrarPersonaPorId(Integer id) {
 		Connection connection = null;
 		try {
-			//REGISTRAR EL DRIVER JDBC DE MYSQL
-			Class.forName("com.mysql.jdbc.Driver");
-			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-			connection = DriverManager.getConnection(urlConnection, "root", "root");
+			connection = this.crearNuevaConnection();
+
 			String deleteSQL = "DELETE FROM personas WHERE idPersona = ?";
 			PreparedStatement deleteSQLConsulta = connection.prepareStatement(deleteSQL);
 			deleteSQLConsulta.setInt(1, id);
@@ -117,10 +115,8 @@ public class PersonaDAO {
 		
 		Connection connection = null;
 		try {
-			//REGISTRAR EL DRIVER JDBC DE MYSQL
-			Class.forName("com.mysql.jdbc.Driver");
-			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-			connection = DriverManager.getConnection(urlConnection, "root", "root");
+			connection = this.crearNuevaConnection();
+
 			
 			String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas WHERE idPersona = ?";
 			PreparedStatement comandoSQLConsulta = connection.prepareStatement(consultaSQL);
@@ -159,10 +155,7 @@ public class PersonaDAO {
 		Connection connection = null;
 		Integer idGenerado = null;
 		try {
-			//REGISTRAR EL DRIVER JDBC DE MYSQL
-			Class.forName("com.mysql.jdbc.Driver");
-			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-			connection = DriverManager.getConnection(urlConnection, "root", "root");
+			connection = this.crearNuevaConnection();
 			
 			String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas";
 			PreparedStatement comandoSQLConsulta = connection.prepareStatement(consultaSQL);
