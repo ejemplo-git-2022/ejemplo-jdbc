@@ -19,6 +19,7 @@ public class PersonaDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
 			connection = DriverManager.getConnection(urlConnection, "root", "root");
+			connection.setAutoCommit(false);
 			
 			String insertSQL = "INSERT INTO personas (nombre, apellido, edad) VALUEs (?, ?, ?)";
 			PreparedStatement insertSQLConsulta = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
@@ -34,24 +35,20 @@ public class PersonaDAO {
 				System.out.println("ID generado: " + idGenerado);
 			}
 			
-			/*String consultaSQL = "SELECT idPersona, nombre, apellido, edad FROM personas";
-			PreparedStatement comandoSQLConsulta = connection.prepareStatement(consultaSQL);
-			ResultSet resultado = comandoSQLConsulta.executeQuery();
-			
-			while(resultado.next() == true) {
-				System.out.println("***********************************");
-				System.out.println("Id persona: " + resultado.getInt("idPersona"));
-				System.out.println("nombre: " + resultado.getString("nombre"));
-				System.out.println("apellido: " + resultado.getString("apellido"));
-				System.out.println("edad: " + resultado.getInt("edad"));				
-			}*/
-			
+			connection.commit();
 			
 		} catch (SQLException e) {
 			System.out.println("Hay un error con el SQL");
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {}
 			e.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("Hay un error generico...");
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {}
+
 			e.printStackTrace();
 		} finally {
 			if(connection != null) {
