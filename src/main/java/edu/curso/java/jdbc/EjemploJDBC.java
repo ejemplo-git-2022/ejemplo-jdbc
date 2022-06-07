@@ -3,12 +3,17 @@ package edu.curso.java.jdbc;
 import java.sql.*;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class EjemploJDBC {
 
+	private final static Logger log = LogManager.getLogger(EjemploJDBC.class);
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		System.out.println("Inicio del programa");
+		log.info("Inicio del programa");
 		PersonaDAO personaDAO = new PersonaDAO();
 		
 		Persona persona1 = new Persona();
@@ -19,17 +24,13 @@ public class EjemploJDBC {
 		Integer idGenerado;
 		try {
 			idGenerado = personaDAO.nuevaPersona(persona1);
-			System.out.println(idGenerado);
+			log.debug("Id generado: " + idGenerado);
 
 		} catch (PersonaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Hay un error al ejecutar el alta", e);
 		}
 		
-		
-	
-		
-		System.out.println("Fin del programa");
+		log.info("Fin del programa");
 
 	}
 

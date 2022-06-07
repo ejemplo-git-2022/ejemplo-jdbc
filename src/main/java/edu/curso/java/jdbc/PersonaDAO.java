@@ -13,7 +13,7 @@ public class PersonaDAO {
 	private Connection crearNuevaConnection() throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
 		String urlConnection = "jdbc:mysql://localhost:3306/ejemplojdbc";
-		return DriverManager.getConnection(urlConnection, "root", "root");
+		return DriverManager.getConnection(urlConnection, "root", "rootXXXXX");
 	}
 	
 	public Integer nuevaPersona(Persona persona) throws PersonaException  {
