@@ -1,5 +1,6 @@
 package edu.curso.java.jdbc;
 
+//POJO
 public class Persona {
 
 	private Integer idPersona;
